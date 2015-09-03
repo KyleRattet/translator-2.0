@@ -33,26 +33,22 @@ $(document).on('ready', function() {
   });
 
   $('#start-test').on('click', function(event){
-    event.preventDefault();
-    for (var i = 0; i < 20; i++) {
-      RandomWord(wordArray);
-    }
+
+    var $languagefrom = $("#testlanguagefrom").val();
+    var $languageto= $("#testlanguageto").val();
+    var payload = {
+      from: $languagefrom,
+      to: $languageto
+    };
+    $.ajax({
+      url: '/test',
+      method: 'post',
+      data: payload
+    }).done(function(data){
+      console.log(data);
+    });
   });
-
-
 });
-
-   function RandomWord(array) {
-        var requestStr = "http://randomword.setgetgo.com/get.php";
-        $.ajax({
-            type: "GET",
-            url: requestStr,
-            dataType: "jsonp",
-        }).done(function(data){
-          array.push(data.Word);
-          console.log(array);
-        });
-    }
 
 
 

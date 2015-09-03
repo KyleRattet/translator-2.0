@@ -46,7 +46,38 @@
 
     <hr>
 
+       <div class="form-group">
+       <label for="testlanguagefrom">Language Translating From</label>
+         <select class="form-control" name="testfrom" id="testlanguagefrom">
+
+          {% for key,val in object %}
+            <option>{{ key }}</option>
+          {% endfor %}
+
+         </select>
+      </div>
+       <div class="form-group">
+       <label for="testlanguageto">Language Translating To</label>
+         <select class="form-control" name="testto" id="testlanguageto">
+
+          {% for key,val in object %}
+            <option>{{ key }}</option>
+          {% endfor %}
+
+         </select>
+      </div>
+
     <button type="button" class="btn btn-default" id="start-test">Start Test</button>
+
+    <h1>From language Word</h1>
+
+    <h2>[Test Answer (In 'to' language)]</h2>
+
+    <ul>
+      <li>Test answer sent to suhayl</li>
+      <li>Test answer translated to from language, returns translated word</li>
+      <li>translated word compared against user input</li>
+    </ul>
 
   </div>
 
