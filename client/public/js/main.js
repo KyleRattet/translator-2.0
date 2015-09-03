@@ -1,5 +1,11 @@
 // add scripts
 
 $(document).on('ready', function() {
-  console.log('sanity check!');
+
+var array = GetLanguagesForTranslate();
+console.log(array);
+
 });
+
+
+

@@ -10,6 +10,14 @@
     <h1>{{ title }}</h1>
     <p>Welcome to {{ title }}</p>
 
+    <form method='POST' action='/'>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Email">
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+
   </div>
 
 {% endblock %}
