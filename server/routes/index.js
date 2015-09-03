@@ -1,25 +1,29 @@
 var express = require('express');
 var router = express.Router();
 var keys = require('../../keys.js');
-
 var bt = require('bing-translate').init({
     client_id: keys.id,
     client_secret: keys.secret
   });
-
+var languages = require('../languages/languages.js');
 
 router.get('/', function(req, res, next) {
   // var array = GetLanguagesForTranslate();
   // console.log(array);
-  res.render('index', { title: 'Express' });
+  // console.log(languages);
+  res.render('index', {
+    title: 'Practice Translating',
+    object: languages
+    });
 });
 
 router.post('/', function(req, res, next) {
-  bt.translate(req.body.name, 'en', 'es', function(err, translated){
+  console.log(req.body);
+  bt.translate(req.body.text, languages[req.body.from], languages[req.body.to], function(err, translated){
   if (err) {
     res.json(err);
   } else {
-    res.send(translated.translated_text);
+    res.json(translated);
   }
   });
 });
