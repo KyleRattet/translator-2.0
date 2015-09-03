@@ -8,9 +8,6 @@ var bt = require('bing-translate').init({
 var languages = require('../languages/languages.js');
 
 router.get('/', function(req, res, next) {
-  // var array = GetLanguagesForTranslate();
-  // console.log(array);
-  // console.log(languages);
   res.render('index', {
     title: 'Practice Translating',
     object: languages

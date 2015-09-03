@@ -9,14 +9,14 @@
 
     <h1>{{ title }}</h1>
 
-    <form method='POST' action='/'>
+    <form id="practice">
       <div class="form-group">
         <label for="exampleInputEmail1">Word to Translate</label>
-        <input type="text" name="text" class="form-control" id="translate" placeholder="Insert Word to Translate">
+        <input type="text" name="text" class="form-control" id="wordinput" placeholder="Insert Word to Translate">
       </div>
       <div class="form-group">
        <label for="languagefrom">Language Translating From</label>
-         <select class="form-control" name="from" id="language-from">
+         <select class="form-control" name="from" id="languagefrom">
 
           {% for key,val in object %}
             <option>{{ key }}</option>
@@ -26,7 +26,7 @@
       </div>
        <div class="form-group">
        <label for="languageto">Language Translating To</label>
-         <select class="form-control" name="to" id="language-to">
+         <select class="form-control" name="to" id="languageto">
 
           {% for key,val in object %}
             <option>{{ key }}</option>
@@ -35,9 +35,14 @@
          </select>
       </div>
 
-      <button type="submit" class="btn btn-default">Submit</button>
+      <button type="button" class="btn btn-default" id="translate">Translate</button>
     </form>
-
+    <div class="results">
+    </div>
+    <div class="alert alert-danger" role="alert" id="error">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      Error
+    </div>
   </div>
 
 {% endblock %}
