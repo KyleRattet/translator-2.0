@@ -40,6 +40,17 @@ router.post('/test', function(req, res, next){
   }
 });
 
+router.post('/testAnswer', function(req, res, next) {
+  console.log(req.body);
+  bt.translate(req.body.text, languages[req.body.from], languages[req.body.to], function(err, translated){
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(translated);
+    }
+  });
+});
+
 function translateWords(word, fromLanguage, callback){
     bt.translate(word, 'en', fromLanguage, function(err, translated){
       if(err){
@@ -60,6 +71,3 @@ function getWord(){
 }
 
 module.exports = router;
-
-
-
