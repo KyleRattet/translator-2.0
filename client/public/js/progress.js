@@ -11,10 +11,10 @@ $(document).on("ready", function() {
   var doughWordsCtx = $('#words-dough').get(0).getContext('2d');
 
 
-  var challengesChart = george.displayCumulativeBar(barChallCtx, 'challenges');
-  var wordsChart = george.displayCumulativeBar(barWordsCtx, 'words');
-  var challPie = george.displayCumulativePie(pieChallCtx, 'challenges', 'pie');
-  var wordsDough = george.displayCumulativePie(doughWordsCtx, 'words', 'doughnut');
+  george.displayCumulativeBar(barChallCtx, 'challenges');
+  george.displayCumulativeBar(barWordsCtx, 'words');
+  george.displayCumulativePie(pieChallCtx, 'challenges', 'pie');
+  george.displayCumulativePie(doughWordsCtx, 'words', 'doughnut');
 
 });
 
