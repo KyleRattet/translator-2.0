@@ -45,6 +45,8 @@ $(document).on('ready', function() {
       method: 'post',
       data: payload
     }).done(function(data){
+      //set up logic for appending words on the DOM and then call the test function to test each word. or initialize the word test setup so we can call it in another way on the DOM?
+
       console.log(data);
     });
   });
