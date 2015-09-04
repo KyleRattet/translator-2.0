@@ -67,17 +67,13 @@
          </select>
       </div>
 
-    <button type="button" class="btn btn-default" id="start-test">Start Test</button>
+    <button type="button" class="btn btn-default" id="select-languages">Select Languages</button>
+    <div class="alert alert-success" role="alert" id="success">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      Languages Selected Successfully
+    </div>
 
-    <h1>From language Word</h1>
-
-    <h2>[Test Answer (In 'to' language)]</h2>
-
-    <ul>
-      <li>Test answer sent to suhayl</li>
-      <li>Test answer translated to from language, returns translated word</li>
-      <li>translated word compared against user input</li>
-    </ul>
+   <button type="button" class="btn btn-default" id="start-quiz">Start Test</button>
 
   </div>
 
@@ -86,7 +82,7 @@
     <h4>Quiz</h4>
      <div class="form-group">
         <label for="exampleInputEmail1">Translate This Word</label>
-        <input type="text" name="text" class="form-control" id="quizword" placeholder="Given Word">
+        <div id="quizword"></div>
       </div>
       <div class="form-group">
         <label for="exampleInputEmail1">User Response</label>

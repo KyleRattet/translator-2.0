@@ -1,7 +1,14 @@
 // add scripts
 
+
+
 $(document).on('ready', function() {
 
+  var testWords = [];
+  var fromLanguage = "";
+  var toLanguage = "";
+
+  $('#success').hide();
 
 
   $("option:contains(English)").first().attr("selected", "selected");
@@ -32,8 +39,8 @@ $(document).on('ready', function() {
     });
   });
 
-  $('#start-test').on('click', function(event){
-
+  $('#select-languages').on('click', function(event){
+    $('#start-quiz').show();
     var $languagefrom = $("#testlanguagefrom").val();
     var $languageto= $("#testlanguageto").val();
     var payload = {
@@ -45,82 +52,61 @@ $(document).on('ready', function() {
       method: 'post',
       data: payload
     }).done(function(data){
+      $('#success').show();
       //set up logic for appending words on the DOM and then call the test function to test each word. or initialize the word test setup so we can call it in another way on the DOM?
+     testWords = data.array;
+     fromLanguage = data.fromLanguage;
+     toLanguage = data.toLanguage;
 
       console.log(data);
     });
   });
-});
 
+
+$('#start-quiz').on('click', function (event) {
+  $('#success').hide();
+  $('#quizword').html(testWords[0]);
+  $(this).hide();
+
+
+
+});
 
 $('#submitAnswer').on('click', function  () {
   $('#quizRender').html('');
   $('#quizResults').html('');
 
-  var $quizWord = $('#quizword').val();
+  var $quizWord = $('#quizword').html();
   var $quizResponse = $('#quizresponse').val();
 
-  $('#quizRender').append("<h4>" + checkAnswer($quizWord, $quizResponse) + "<h4>");
+  var payload = {
+        text: $quizWord,
+        from: fromLanguage,
+        to: toLanguage
+      };
 
-  console.log(correct, "correct answers");
-  console.log(incorrect, "incorrect answers");
+   $.ajax({
+      url: "/",
+      method: "post",
+      data: payload
+    }).done(function(data){
+      $('#quizRender').append("<h4>" + checkAnswer(data.translated_text, $quizResponse) + "<h4>");
 
-  console.log(gradeQuiz(incorrect));
 
-  $('#quizResults').append("<h4>" + gradeQuiz(incorrect) + "<h4>");
+      $('#quizResults').append("<h4>" + gradeQuiz(incorrect) + "<h4>");
+
+    });
+
+
+
+  });
+
 
 });
 
-
-
-
-var words = ['droplane',
-'dehypnotise',
-'lawlessly',
-'morison',
-'savorous',
-'sulfuret',
-'cardiotonic',
-'octagon',
-'deiced',
-'serbonian',
-'wind',
-'gladiatorial',
-'spinoza',
-'mildness',
-'unparticularized',
-'misform',
-'invectively',
-'ethiop',
-'metronidazole',
-'lop'];
-
-
-//hypothetical user responses
-var response = ['droplane',
-'dehypnotise',
-'lawlessly',
-'morison',
-'savorous',
-'sulfuret',
-'cardiotonic',
-'octagon',
-'deiced',
-'serbonian',
-'wind',
-'gladiatorial',
-'spinoza',
-'mildness',
-'unparticularized',
-'misform',
-'invectively',
-'ethiop',
-'metronidazole',
-'lop'];
-
-
 var correct = 0;
 var incorrect = 0;
+var attempted = correct + incorrect;
 
 //Grade Quiz
 function gradeQuiz (incorrect) {
@@ -137,9 +123,6 @@ function checkAnswer (word, response) {
 
   var diffs = 0;
   var message ="";
-
-  //check word lengths, if more than one character difference in length it has to be wrong
-  //need to check if the response is one longer
 
   var lengthCompare = Math.abs(word.length - response.length);
   console.log(lengthCompare);
@@ -185,7 +168,7 @@ function checkAnswer (word, response) {
 
 
 // gradeQuiz(words, response);
-var attempted = correct + incorrect;
+
 // console.log(finalScore(correct, incorrect));
 
 
