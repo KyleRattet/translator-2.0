@@ -12,6 +12,7 @@
     "debug": "~2.2.0",
     "express": "~4.13.1",
     "morgan": "~1.6.1",
+    "random-word": "^1.0.2",
     "serve-favicon": "~2.3.0",
     "swig": "^1.4.2"
   }
