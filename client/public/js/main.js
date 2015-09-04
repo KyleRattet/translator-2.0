@@ -1,9 +1,6 @@
 // add scripts
 
 $(document).on('ready', function() {
-
-  var wordArray=[];
-
   $("option:contains(English)").first().attr("selected", "selected");
   $("#error").hide();
 
