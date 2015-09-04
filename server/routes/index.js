@@ -16,6 +16,7 @@ router.get('/', function(req, res, next) {
     });
 });
 
+// for testing charting functions of User
 router.get('/progress', function(req, res) {
   res.render('progress', {username: "George"});
 });
