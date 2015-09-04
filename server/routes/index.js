@@ -26,24 +26,56 @@ router.post('/', function(req, res, next) {
   });
 });
 
+
 router.post('/test', function(req, res, next){
+  console.log(req.body);
   var wordArray = [];
   for (var i = 0; i < 20; i++) {
-      var word = getWord(function(data){
+    getWord(function(err, data){
+      if (err){
+        console.log('error');
+      } else {
         wordArray.push(data);
-          if(wordArray.length === 19){
-             res.send(wordArray);
-          }
-      });
-    }
+        if (wordArray.length === 19){
+          var cleanArray = regexStrings(wordArray);
+          var response = translateWords(wordArray, languages[req.body.from], function(err, data){
+            res.send(response);
+          });
+        }
+      }
+    });
+  }
 });
+
+function translateWords(array, fromLanguage, callback){
+  var translatedArray = [];
+  for (var i = 0; i < 20; i++) {
+    bt.translate(array[i], 'en', fromLanguage, function(err, translated){
+      // console.log(translated);
+      translatedArray.push(translated.response);
+      // console.log(translatedArray);
+      // if (translatedArray === 19){
+      //   console.log(translatedArray;
+      // }
+    });
+  }
+}
+
+function regexStrings(array){
+  var cleanArray = [];
+  for (var i = 0; i < array.length; i++) {
+    var newWord = array[i].replace(value = value.replace(/(?:\\[rn])+/g, ""));
+    cleanArray.push(newWord);
+  }
+  return cleanArray;
+}
 
 
 function getWord(callback){
   http.get("http://randomword.setgetgo.com/get.php", function(response){
-    response.setEncoding('utf8');
-    response.on('data', function(data){
-      return(callback(data));
+      response.setEncoding('utf8');
+      response.on('data', function(data){
+        return callback(null, data);
       });
     });
 }
