@@ -33,7 +33,7 @@ $(document).on('ready', function() {
       if (data.translated_text === $wordinput) {
         $("#error").show();
       } else {
-      $(".results").append("<h4>" + data.translated_text + "<h4>");
+      $("#wordoutput").val(data.translated_text);
       $("#wordinput").val("");
       }
     });

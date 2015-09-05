@@ -11,7 +11,6 @@ var randomWord = require('random-word');
 
 router.get('/', function(req, res, next) {
   res.render('index', {
-    title: 'Practice Translating',
     object: languages
     });
 });

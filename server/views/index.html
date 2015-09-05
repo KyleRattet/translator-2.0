@@ -5,46 +5,82 @@
 
 {% block content %}
 
+
+
   <div class="container">
 
-    <h1>{{ title }}</h1>
 
-    <form id="practice">
-      <div class="form-group">
-        <label for="exampleInputEmail1">Word to Translate</label>
-        <input type="text" name="text" class="form-control" id="wordinput" placeholder="Insert Word to Translate">
-      </div>
-      <div class="form-group">
-       <label for="languagefrom">Language Translating From</label>
-         <select class="form-control" name="from" id="languagefrom">
+
+
+
+    <div class="row">
+
+      <h1>Practice Translating</h1>
+
+      <div class="col-xs-6">
+
+      <form id="practice">
+        <div class="form-group">
+          <label for="languagefrom">Language Translating From</label>
+          <select class="form-control" name="from" id="languagefrom">
 
           {% for key,val in object %}
             <option>{{ key }}</option>
           {% endfor %}
 
-         </select>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Word to Translate</label>
+          <input type="text" name="text" class="form-control" id="wordinput" placeholder="Insert Word to Translate">
+        </div>
       </div>
+
+      <div class="col-xs-6">
+
        <div class="form-group">
-       <label for="languageto">Language Translating To</label>
-         <select class="form-control" name="to" id="languageto">
+          <label for="languageto">Language Translating To</label>
+          <select class="form-control" name="to" id="languageto">
 
           {% for key,val in object %}
             <option>{{ key }}</option>
           {% endfor %}
 
-         </select>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Translation</label>
+          <input type="text" name="text" class="form-control" id="wordoutput" placeholder="Translation">
+        </div>
+
       </div>
 
-      <button type="button" class="btn btn-default" id="translate">Translate</button>
-    </form>
-    <div class="results">
+      <div class="row text-center">
+
+        <button type="button" class="btn btn-primary animated rubberBand" id="translate">Translate</button>
+      </form>
+
+      </div>
+
+
+
+        <div class="alert alert-danger" role="alert" id="error">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          Error
+        </div>
+
+
     </div>
-    <div class="alert alert-danger" role="alert" id="error">
-      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-      Error
-    </div>
+
 
     <hr>
+
+
+    <div class="row">
+
+      <h1>Challenges</h1>
+
+      <div class="col-xs-6">
 
        <div class="form-group">
        <label for="testlanguagefrom">Language Translating From</label>
@@ -56,6 +92,10 @@
 
          </select>
       </div>
+
+      </div>
+
+      <div class="col-xs-6">
        <div class="form-group">
        <label for="testlanguageto">Language Translating To</label>
          <select class="form-control" name="testto" id="testlanguageto">
@@ -65,31 +105,82 @@
           {% endfor %}
 
          </select>
+         </div>
       </div>
 
-    <button type="button" class="btn btn-default" id="select-languages">Select Languages</button>
-    <div class="alert alert-success" role="alert" id="success">
-      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-      Languages Selected Successfully
+      <div class="row text-center">
+
+        <button type="button" class="btn btn-primary animated rubberBand" id="select-languages">Select Languages</button>
+          <div class="alert alert-success" role="alert" id="success">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            Languages Selected Successfully
+          </div>
+
+        <button type="button" class="btn btn-success animated rubberBand" id="start-quiz">Start Test</button>
+
+      </div>
+
+
+
+      <h2>Quiz</h2>
+
+      <div class="row">
+
+        <div class="row">
+
+        <div class="col-xs-6">
+
+         <div class="form-group">
+            <label for="exampleInputEmail1">Translate This Word:</label>
+            <div class="panel panel-default">
+              <div id="quizword" class="panel-body">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+         <div class="col-xs-6">
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">Response</label>
+            <input type="text" name="text" class="form-control" id="quizresponse" placeholder="Insert Word to Translate">
+
+          </div>
+
+         </div>
+
+        </div>
+      </div>
+
+
+      <div class="row text-center">
+
+          <input type="submit" class="btn btn-primary animated rubberBand" id="submitAnswer">
+
+      </div>
+
+       <div class="row text-center">
+
+        <div id="quizRender"></div>
+        <div id="quizResults"></div>
+
+      </div>
+
+
+
     </div>
 
-   <button type="button" class="btn btn-default" id="start-quiz">Start Test</button>
+    <hr>
+
+    <div class="row">
+
+    <h1>Progress</h1>
+
+    </div>
+
+
 
   </div>
-
-
-
-    <h4>Quiz</h4>
-     <div class="form-group">
-        <label for="exampleInputEmail1">Translate This Word</label>
-        <div id="quizword"></div>
-      </div>
-      <div class="form-group">
-        <label for="exampleInputEmail1">User Response</label>
-        <input type="text" name="text" class="form-control" id="quizresponse" placeholder="Insert Word to Translate">
-        <input type="submit" class="btn btn-primary btn-sm" id="submitAnswer">
-      </div>
-  <div id="quizRender"></div>
-  <div id="quizResults"></div>
 
 {% endblock %}
