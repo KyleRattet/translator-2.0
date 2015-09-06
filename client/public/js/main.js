@@ -53,12 +53,9 @@ $(document).on('ready', function() {
       data: payload
     }).done(function(data){
       $('#success').show();
-      //set up logic for appending words on the DOM and then call the test function to test each word. or initialize the word test setup so we can call it in another way on the DOM?
      testWords = data.array;
      fromLanguage = data.fromLanguage;
      toLanguage = data.toLanguage;
-
-      console.log(data);
     });
   });
 
@@ -67,9 +64,6 @@ $('#start-quiz').on('click', function (event) {
   $('#success').hide();
   $('#quizword').html(testWords[0]);
   $(this).hide();
-
-
-
 });
 
 $('#submitAnswer').on('click', function  () {
@@ -78,7 +72,6 @@ $('#submitAnswer').on('click', function  () {
 
   var $quizWord = $('#quizword').html();
   var $quizResponse = $('#quizresponse').val();
-
   var payload = {
         text: $quizWord,
         from: fromLanguage,
@@ -91,14 +84,10 @@ $('#submitAnswer').on('click', function  () {
       data: payload
     }).done(function(data){
       $('#quizRender').append("<h4>" + checkAnswer(data.translated_text, $quizResponse) + "<h4>");
-
-
       $('#quizResults').append("<h4>" + gradeQuiz(incorrect) + "<h4>");
-
+      $('#quizword').html(testWords[attempted]);
+      $('#quizresponse').val('');
     });
-
-
-
   });
 
 
@@ -125,7 +114,6 @@ function checkAnswer (word, response) {
   var message ="";
 
   var lengthCompare = Math.abs(word.length - response.length);
-  console.log(lengthCompare);
 
   if (lengthCompare <= 1) {
 
@@ -140,7 +128,7 @@ function checkAnswer (word, response) {
 
     if (diffs < 1 && lengthCompare === 0) {
       correct += 1;
-      message ="100% correct!";
+      message ="That's correct!";
     } else if (diffs === 1) {
       correct += 1;
       message="Close enough";
@@ -153,7 +141,7 @@ function checkAnswer (word, response) {
     incorrect += 1;
       message = "incorrect, word length is too different";
   }
-
+  attempted = correct + incorrect;
   return message;
 }
       // if(word.charAt(i) === response.charAt(i)) {
