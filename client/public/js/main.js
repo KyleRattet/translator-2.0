@@ -9,6 +9,9 @@ $(document).on('ready', function() {
   var toLanguage = "";
 
   $('#success').hide();
+  $('#new-quiz').hide();
+  $('#submitAnswer').hide();
+  $('#not-selected').hide();
 
 
   $("option:contains(English)").first().attr("selected", "selected");
@@ -44,6 +47,7 @@ $(document).on('ready', function() {
 
   $('#select-languages').on('click', function(event){
     $('#start-quiz').show();
+    $('#not-selected').hide();
     var $languagefrom = $("#testlanguagefrom").val();
     var $languageto= $("#testlanguageto").val();
     var payload = {
@@ -56,23 +60,24 @@ $(document).on('ready', function() {
       data: payload
     }).done(function(data){
       $('#success').show();
-      //set up logic for appending words on the DOM and then call the test function to test each word. or initialize the word test setup so we can call it in another way on the DOM?
      testWords = data.array;
      fromLanguage = data.fromLanguage;
      toLanguage = data.toLanguage;
-
-      console.log(data);
     });
   });
 
 
 $('#start-quiz').on('click', function (event) {
-  $('#success').hide();
-  $('#quizword').html(testWords[0]);
-  $(this).hide();
+  var languageCheck = checkLanguages();
+  if (languageCheck === false){
+    $('#not-selected').show();
+  } else {
 
-
-
+    $('#success').hide();
+    $('#quizword').html(testWords[0]);
+    $(this).hide();
+    $('#submitAnswer').show();
+  }
 });
 
 $('#submitAnswer').on('click', function  () {
@@ -81,7 +86,6 @@ $('#submitAnswer').on('click', function  () {
 
   var $quizWord = $('#quizword').html();
   var $quizResponse = $('#quizresponse').val();
-
   var payload = {
         text: $quizWord,
         from: fromLanguage,
@@ -94,15 +98,30 @@ $('#submitAnswer').on('click', function  () {
       data: payload
     }).done(function(data){
       $('#quizRender').append("<h4>" + checkAnswer(data.translated_text, $quizResponse) + "<h4>");
-
-
       $('#quizResults').append("<h4>" + gradeQuiz(incorrect) + "<h4>");
-
+      $('#quizword').html(testWords[attempted]);
+      $('#quizresponse').val('');
     });
+  });
 
-
+  $('#new-quiz').on('click', function(event){
+    event.preventDefault();
+    fromLanguage = "";
+    toLanguage = "";
+    $('#start-quiz').show();
+    $(this).hide();
+    correct = 0;
+    incorrect = 0;
 
   });
+
+  function checkLanguages(){
+  if (fromLanguage === "" || toLanguage === "" || (fromLanguage === "" && toLanguage === "")){
+    $('#not-selected').show();
+    return false;
+  }
+}
+
 
 
 });
@@ -110,6 +129,7 @@ $('#submitAnswer').on('click', function  () {
 var correct = 0;
 var incorrect = 0;
 var attempted = correct + incorrect;
+
 
 //Grade Quiz
 function gradeQuiz (incorrect) {
@@ -124,11 +144,29 @@ function gradeQuiz (incorrect) {
 //Check One Quiz Answer
 function checkAnswer (word, response) {
 
+  attempted = correct + incorrect;
+
+  if(attempted === 19){
+    $('#submitAnswer').text('');
+    $('#submitAnswer').text('Finish Quiz');
+  }
+
+  if(attempted === 20){
+    $('#quizword').html('');
+    $('#quizresponse').val('');
+    $('#new-quiz').show();
+    $('#quizRender').html('');
+    $('#quizResults').html('');
+    $('#submitAnswer').text('');
+    $('#submitAnswer').text('Submit Answer');
+    $('#submitAnswer').hide();
+    message = 'You\'re done, you\'ve got ' + correct + ' questions right and ' + incorrect + ' questions wrong.';
+    return message;
+  }
+
   var diffs = 0;
   var message ="";
-
   var lengthCompare = Math.abs(word.length - response.length);
-  console.log(lengthCompare);
 
   if (lengthCompare <= 1) {
 
@@ -143,7 +181,7 @@ function checkAnswer (word, response) {
 
     if (diffs < 1 && lengthCompare === 0) {
       correct += 1;
-      message ="100% correct!";
+      message ="That's correct!";
     } else if (diffs === 1) {
       correct += 1;
       message="Close enough";
@@ -156,7 +194,7 @@ function checkAnswer (word, response) {
     incorrect += 1;
       message = "incorrect, word length is too different";
   }
-
+  attempted = correct + incorrect;
   return message;
 }
       // if(word.charAt(i) === response.charAt(i)) {

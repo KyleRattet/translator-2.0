@@ -10,7 +10,18 @@
   <div class="container">
 
 
-
+    <form method = '/user' action = 'post'>
+      <div class="form-group">
+        <label for="User">User Name: </label>
+        <input type="text" class="form-control" id="userName" placeholder="User">
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox">New User?
+        </label>
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+   </form>
 
 
     <div class="row">
@@ -111,9 +122,15 @@
       <div class="row text-center">
 
         <button type="button" class="btn btn-primary animated rubberBand" id="select-languages">Select Languages</button>
+        <br><br>
           <div class="alert alert-success" role="alert" id="success">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             Languages Selected Successfully
+          </div>
+          <br><br>
+          <div class="alert alert-danger" role="alert" id="not-selected">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            You have to select a language!!
           </div>
 
         <button type="button" class="btn btn-success animated rubberBand" id="start-quiz">Start Test</button>
@@ -156,7 +173,7 @@
 
       <div class="row text-center">
 
-          <input type="submit" class="btn btn-primary animated rubberBand" id="submitAnswer">
+          <button type="submit" class="btn btn-primary animated rubberBand" id="submitAnswer">Submit Answer</button>
 
       </div>
 
@@ -164,6 +181,13 @@
 
         <div id="quizRender"></div>
         <div id="quizResults"></div>
+
+      <div class="row text-center">
+
+         <button type="button" class="btn btn-success animated rubberBand" id="new-quiz">New Test</button>
+
+      </div>
+
 
       </div>
 
@@ -176,6 +200,18 @@
     <div class="row">
 
     <h1>Progress</h1>
+
+
+  <div class="container">
+
+    <h3>{{ username }}</h3>
+
+    <canvas id="challenges" width="400" height="400"></canvas>
+    <canvas id="words" width="400" height="400"></canvas>
+    <canvas id="challenges-pie" width="300" height="300"></canvas>
+    <canvas id="words-dough" width="300" height="300"></canvas>
+
+  </div>r
 
     </div>
 
