@@ -9,6 +9,8 @@ $(document).on('ready', function() {
   var toLanguage = "";
 
   $('#success').hide();
+  $('#new-quiz').hide();
+  $('#submitAnswer').hide();
 
 
   $("option:contains(English)").first().attr("selected", "selected");
@@ -64,6 +66,7 @@ $('#start-quiz').on('click', function (event) {
   $('#success').hide();
   $('#quizword').html(testWords[0]);
   $(this).hide();
+  $('#submitAnswer').show();
 });
 
 $('#submitAnswer').on('click', function  () {
@@ -90,12 +93,23 @@ $('#submitAnswer').on('click', function  () {
     });
   });
 
+  $('#new-quiz').on('click', function(event){
+    event.preventDefault();
+    $('#start-quiz').show();
+    $(this).hide();
+    correct = 0;
+    incorrect = 0;
+
+  });
+
 
 });
 
 var correct = 0;
 var incorrect = 0;
 var attempted = correct + incorrect;
+
+
 
 //Grade Quiz
 function gradeQuiz (incorrect) {
@@ -110,9 +124,28 @@ function gradeQuiz (incorrect) {
 //Check One Quiz Answer
 function checkAnswer (word, response) {
 
+  attempted = correct + incorrect;
+
+  if(attempted === 19){
+    $('#submitAnswer').text('');
+    $('#submitAnswer').text('Finish Quiz');
+  }
+
+  if(attempted === 20){
+    $('#quizword').html('');
+    $('#quizresponse').val('');
+    $('#new-quiz').show();
+    $('#quizRender').html('');
+    $('#quizResults').html('');
+    $('#submitAnswer').text('');
+    $('#submitAnswer').text('Submit Answer');
+    $('#submitAnswer').hide();
+    message = 'You\'re done, you\'ve got ' + correct + ' questions right and ' + incorrect + ' questions wrong.';
+    return message;
+  }
+
   var diffs = 0;
   var message ="";
-
   var lengthCompare = Math.abs(word.length - response.length);
 
   if (lengthCompare <= 1) {

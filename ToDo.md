@@ -4,6 +4,8 @@ Public
 
 - add logic that stops the quiz at 20, then displays complete result and adds these test results to graph (how is ben using the data?)
 
+- add something to show question
+
 - check how data is stored if no user has signed in, is it possible to then access to these variables if someone wants to create a new user after they have already done soe practice tests? and can this info be sent via an ajax request so that a new user can have the tests theyva already don saved?
 
 - what to do if test not completed, so neither failed nor finished e.g. 14/20 questions done with only 3 wrong...
