@@ -17,6 +17,7 @@ $(document).on('ready', function() {
   $("#translate").on("click", function(e) {
     e.preventDefault();
     $(".results").html("");
+
     var $wordinput = $("#wordinput").val();
     var $languagefrom = $("#languagefrom").val();
     var $languageto= $("#languageto").val();
@@ -25,6 +26,7 @@ $(document).on('ready', function() {
       from: $languagefrom,
       to: $languageto
     };
+
     $.ajax({
       url: "/",
       method: "post",
@@ -32,9 +34,10 @@ $(document).on('ready', function() {
     }).done(function(data){
       if (data.translated_text === $wordinput) {
         $("#error").show();
+
       } else {
-      $("#wordoutput").val(data.translated_text);
-      $("#wordinput").val("");
+        $("#wordoutput").val(data.translated_text);
+        $("#wordinput").val("");
       }
     });
   });
@@ -170,7 +173,3 @@ function checkAnswer (word, response) {
 // gradeQuiz(words, response);
 
 // console.log(finalScore(correct, incorrect));
-
-
-
-
