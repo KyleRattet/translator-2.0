@@ -116,8 +116,41 @@ $('#submitAnswer').on('click', function  () {
   if (fromLanguage === "" || toLanguage === "" || (fromLanguage === "" && toLanguage === "")){
     $('#not-selected').show();
     return false;
+    }
   }
-}
+
+  $('#userSubmit').on('click', function(){
+    var $form = $(this).parent();
+    if($('#newUser').is(':checked')){
+    $userName = $('#userName').val();
+      var payload = {
+      userName : $userName,
+      correctChallenges :  insert-here,
+      attemptedChallenges:  insert-here,
+      correctWords: correct,
+      attemptedWords: attempted,
+      };
+      $.ajax({
+        url: '/users/new',
+        method: 'post',
+        data: payload
+      }).done(function(data){
+        console.log(data);
+      });
+    } else {
+      $userName = $('#userName').val();
+      var payload2 = {
+        username: $username
+      };
+      $.ajax({
+        url: '/users/login',
+        method : 'post',
+        data: payload2
+      }).done(function(data){
+        console.log(data);
+      });
+    }
+  });
 
 
 
