@@ -11,6 +11,7 @@ $(document).on('ready', function() {
   $('#success').hide();
   $('#new-quiz').hide();
   $('#submitAnswer').hide();
+  $('#not-selected').hide();
 
 
   $("option:contains(English)").first().attr("selected", "selected");
@@ -43,6 +44,7 @@ $(document).on('ready', function() {
 
   $('#select-languages').on('click', function(event){
     $('#start-quiz').show();
+    $('#not-selected').hide();
     var $languagefrom = $("#testlanguagefrom").val();
     var $languageto= $("#testlanguageto").val();
     var payload = {
@@ -63,10 +65,16 @@ $(document).on('ready', function() {
 
 
 $('#start-quiz').on('click', function (event) {
-  $('#success').hide();
-  $('#quizword').html(testWords[0]);
-  $(this).hide();
-  $('#submitAnswer').show();
+  var languageCheck = checkLanguages();
+  if (languageCheck === false){
+    $('#not-selected').show();
+  } else {
+
+    $('#success').hide();
+    $('#quizword').html(testWords[0]);
+    $(this).hide();
+    $('#submitAnswer').show();
+  }
 });
 
 $('#submitAnswer').on('click', function  () {
@@ -95,6 +103,8 @@ $('#submitAnswer').on('click', function  () {
 
   $('#new-quiz').on('click', function(event){
     event.preventDefault();
+    fromLanguage = "";
+    toLanguage = "";
     $('#start-quiz').show();
     $(this).hide();
     correct = 0;
@@ -102,13 +112,20 @@ $('#submitAnswer').on('click', function  () {
 
   });
 
+  function checkLanguages(){
+  if (fromLanguage === "" || toLanguage === "" || (fromLanguage === "" && toLanguage === "")){
+    $('#not-selected').show();
+    return false;
+  }
+}
+
+
 
 });
 
 var correct = 0;
 var incorrect = 0;
 var attempted = correct + incorrect;
-
 
 
 //Grade Quiz
