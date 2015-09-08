@@ -77,12 +77,19 @@ $('#start-quiz').on('click', function (event) {
     $('#quizword').html(testWords[0]);
     $(this).hide();
     $('#submitAnswer').show();
+    $('#submitAnswer').html('<p> Begin </p>');
+    $('#quizQuestion').html('');
+    $('#quizQuestion').append("<h2>" + "Quiz #: " + (attempted + 1) + "<h2>");
   }
 });
 
 $('#submitAnswer').on('click', function  () {
   $('#quizRender').html('');
   $('#quizResults').html('');
+   if(attempted === 0){
+        $('#quizRender').html('');
+        $('#submitAnswer').html('<p> Submit Answer </p>');
+      }
 
   var $quizWord = $('#quizword').html();
   var $quizResponse = $('#quizresponse').val();
@@ -97,21 +104,16 @@ $('#submitAnswer').on('click', function  () {
       method: "post",
       data: payload
     }).done(function(data){
-      $('#quizRender').append("<h4>" + checkAnswer(data.translated_text, $quizResponse) + "<h4>");
-      $('#quizResults').append("<h4>" + gradeQuiz(incorrect) + "<h4>");
       $('#quizword').html(testWords[attempted]);
       $('#quizresponse').val('');
+      $('#quizResults').append("<h4>" + gradeQuiz(incorrect) + "<h4>");
+      $('#quizRender').append("<h4>" + checkAnswer(data.translated_text, $quizResponse) + "<h4>");
     });
   });
 
   $('#new-quiz').on('click', function(event){
     event.preventDefault();
-    fromLanguage = "";
-    toLanguage = "";
-    $('#start-quiz').show();
-    $(this).hide();
-    correct = 0;
-    incorrect = 0;
+    $('#quizRender').html('');
 
   });
 
@@ -179,22 +181,22 @@ function checkAnswer (word, response) {
 
   attempted = correct + incorrect;
 
+  if(attempted === 0){
+    $('#quizRender').hide();
+  } else {
+    $('#quizRender').show();
+  }
+
+  $('#quizQuestion').html('');
+  $('#quizQuestion').append("<h2>" + "Quiz #: " + (attempted + 1)  + "<h2>");
+
   if(attempted === 19){
     $('#submitAnswer').text('');
     $('#submitAnswer').text('Finish Quiz');
   }
 
-  if(attempted === 20){
-    $('#quizword').html('');
-    $('#quizresponse').val('');
-    $('#new-quiz').show();
-    $('#quizRender').html('');
-    $('#quizResults').html('');
-    $('#submitAnswer').text('');
-    $('#submitAnswer').text('Submit Answer');
-    $('#submitAnswer').hide();
-    message = 'You\'re done, you\'ve got ' + correct + ' questions right and ' + incorrect + ' questions wrong.';
-    return message;
+  if(attempted === 20 || incorrect === 5){
+    return endQuiz();
   }
 
   var diffs = 0;
@@ -230,17 +232,26 @@ function checkAnswer (word, response) {
   attempted = correct + incorrect;
   return message;
 }
-      // if(word.charAt(i) === response.charAt(i)) {
-      //   correct += 1;
-      //   console.log("right");
-      // } else {
-      //   incorrect += 1;
-      //   console.log(incorrect, "incorrect");
-      //   console.log("wrong");
-      // }
 
 
-
-// gradeQuiz(words, response);
-
-// console.log(finalScore(correct, incorrect));
+function endQuiz () {
+    $('#quizQuestion').html('');
+    $('#quizQuestion').append("<h2> Quiz <h2>");
+    $('#quizword').html('');
+    $('#quizresponse').val('');
+    $('#new-quiz').show();
+    $('#quizRender').html('');
+    $('#quizResults').html('');
+    $('#submitAnswer').text('');
+    $('#submitAnswer').text('Submit Answer');
+    $('#submitAnswer').hide();
+    message = 'You\'re done, you\'ve got ' + correct + ' questions right and ' + incorrect + ' questions wrong.';
+    fromLanguage = "";
+    toLanguage = "";
+    $('#start-quiz').show();
+    $(this).hide();
+    correct = 0;
+    incorrect = 0;
+    attempted = 0;
+    return message;
+}
