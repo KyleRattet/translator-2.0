@@ -77,7 +77,7 @@ $('#start-quiz').on('click', function (event) {
     $('#quizword').html(testWords[0]);
     $(this).hide();
     $('#submitAnswer').show();
-    $('#submitAnswer').html('<p> Begin </p>');
+    // $('#submitAnswer').html('<p> Begin </p>');
     $('#quizQuestion').html('');
     $('#quizQuestion').append("<h2>" + "Quiz #: " + (attempted + 1) + "<h2>");
   }
@@ -86,11 +86,11 @@ $('#start-quiz').on('click', function (event) {
 $('#submitAnswer').on('click', function  () {
   $('#quizRender').html('');
   $('#quizResults').html('');
-   if(attempted === 0){
-        $('#quizRender').html('');
-        $('#submitAnswer').html('<p> Submit Answer </p>');
-      }
-
+   // if(attempted === 0){
+   //      $('#quizRender').html('');
+   //      $('#submitAnswer').html('<p> Submit Answer </p>');
+   //    }
+   console.log('before ajax call: '+attempted);
   var $quizWord = $('#quizword').html();
   var $quizResponse = $('#quizresponse').val();
   var payload = {
@@ -104,9 +104,10 @@ $('#submitAnswer').on('click', function  () {
       method: "post",
       data: payload
     }).done(function(data){
+      console.log('after ajax call: '+attempted);
       $('#quizresponse').val('');
-      $('#quizResults').append("<h4>" + gradeQuiz(incorrect) + "<h4>");
       $('#quizRender').append("<h4>" + checkAnswer(data.translated_text, $quizResponse) + "<h4>");
+      $('#quizResults').append("<h4>" + gradeQuiz(incorrect) + "<h4>");
       $('#quizword').html(testWords[attempted]);
     });
   });
@@ -146,7 +147,7 @@ $('#submitAnswer').on('click', function  () {
       };
       $.get('/users/login/' + $userName, function(data) {
         user = data;
-      })
+      });
     }
   });
 
@@ -172,14 +173,12 @@ function gradeQuiz (incorrect) {
 //Check One Quiz Answer
 function checkAnswer (word, response) {
 
-  if(attempted === 0){
-    $('#quizRender').hide();
-  } else {
-    $('#quizRender').show();
-  }
+  // if(attempted === 0){
+  //   $('#quizRender').hide();
+  // } else {
+  //   $('#quizRender').show();
+  // }
 
-  $('#quizQuestion').html('');
-  $('#quizQuestion').append("<h2>" + "Quiz #: " + (attempted + 1)  + "<h2>");
 
   if(attempted === 19){
     $('#submitAnswer').text('');
@@ -221,6 +220,8 @@ function checkAnswer (word, response) {
       message = "incorrect, word length is too different";
   }
   attempted = correct + incorrect;
+  $('#quizQuestion').html('');
+  $('#quizQuestion').append("<h2>" + "Quiz #: " + (attempted + 1)  + "<h2>");
   return message;
 }
 
@@ -253,7 +254,7 @@ function endQuiz () {
           'correct': +user.words.correct + correct,
           'attempted': +user.words.attempted + attempted
         }
-      }
+      };
     }
     else {
       payload = {
@@ -265,7 +266,7 @@ function endQuiz () {
           'correct': +user.words.correct + correct,
           'attempted': +user.words.attempted + attempted
         }
-        }
+        };
       }
 
     $.ajax({
