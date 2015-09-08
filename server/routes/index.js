@@ -22,16 +22,16 @@ router.get('/progress', function(req, res) {
   res.render('progress', {username: "George"});
 });
 
-router.post('/', function(req, res, next) {
-  console.log(req.body);
-  bt.translate(req.body.text, languages[req.body.from], languages[req.body.to], function(err, translated){
-  if (err) {
-    res.json(err);
-  } else {
-    res.json(translated);
-  }
-  });
-});
+// router.post('/', function(req, res, next) {
+//   console.log(req.body);
+//   bt.translate(req.body.text, languages[req.body.from], languages[req.body.to], function(err, translated){
+//   if (err) {
+//     res.json(err);
+//   } else {
+//     res.json(translated);
+//   }
+//   });
+// });
 
 router.post('/users/login', function(req, res, next){
   var query = {'name': req.params.userName};

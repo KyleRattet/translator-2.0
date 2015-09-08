@@ -31,7 +31,7 @@ $(document).on('ready', function() {
     };
 
     $.ajax({
-      url: "/",
+      url: "/api/translate",
       method: "post",
       data: payload
     }).done(function(data){
