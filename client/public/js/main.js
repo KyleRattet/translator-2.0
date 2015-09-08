@@ -274,7 +274,7 @@ function endQuiz () {
       method: 'put',
       data: payload
     }).done(function(data) {
-      user = data;
+      user = data.user;
       console.log(data);
       correct = 0;
       incorrect = 0;
