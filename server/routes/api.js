@@ -41,10 +41,14 @@ router.put('/user/:id', function(req, res, next) {
   console.log(req.body);
   var query = {'_id': req.params.id};
   var update = {
-    challenges: {correct: req.body['challenges[correct]'],
-                 attempted: req.body['challenges[attempted]']},
-    words: {correct: req.body['words[correct]'],
-            attempted: req.body['words[attempted]']}
+    challenges: {
+      correct: req.body['challenges[correct]'],
+      attempted: req.body['challenges[attempted]']
+    },
+    words: {
+      correct: req.body['words[correct]'],
+      attempted: req.body['words[attempted]']
+    }
   };
   var options = {new: true};
 

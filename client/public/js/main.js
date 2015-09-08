@@ -149,6 +149,7 @@ $('#submitAnswer').on('click', function  () {
         user = data;
       });
     }
+    $("#prog-user").html($userName);
   });
 
 
@@ -274,7 +275,7 @@ function endQuiz () {
       method: 'put',
       data: payload
     }).done(function(data) {
-      user = data;
+      user = data.user;
       console.log(data);
       correct = 0;
       incorrect = 0;
