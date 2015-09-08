@@ -1,5 +1,5 @@
 // add scripts
-
+  var user;
 
 
 $(document).on('ready', function() {
@@ -7,7 +7,6 @@ $(document).on('ready', function() {
   var testWords = [];
   var fromLanguage = "";
   var toLanguage = "";
-  var user;
 
   $('#success').hide();
   $('#new-quiz').hide();
@@ -105,10 +104,10 @@ $('#submitAnswer').on('click', function  () {
       method: "post",
       data: payload
     }).done(function(data){
-      $('#quizword').html(testWords[attempted]);
       $('#quizresponse').val('');
       $('#quizResults').append("<h4>" + gradeQuiz(incorrect) + "<h4>");
       $('#quizRender').append("<h4>" + checkAnswer(data.translated_text, $quizResponse) + "<h4>");
+      $('#quizword').html(testWords[attempted]);
     });
   });
 
@@ -172,8 +171,6 @@ function gradeQuiz (incorrect) {
 
 //Check One Quiz Answer
 function checkAnswer (word, response) {
-
-  attempted = correct + incorrect;
 
   if(attempted === 0){
     $('#quizRender').hide();
@@ -244,8 +241,43 @@ function endQuiz () {
     toLanguage = "";
     $('#start-quiz').show();
     $(this).hide();
-    correct = 0;
-    incorrect = 0;
-    attempted = 0;
-    return message;
+
+    var payload;
+    if (incorrect === 5) {
+      payload = {
+        'challenges': {
+          'correct': +user.challenges.correct,
+          'attempted': +user.challenges.attempted + 1
+        },
+        'words': {
+          'correct': +user.words.correct + correct,
+          'attempted': +user.words.attempted + attempted
+        }
+      }
+    }
+    else {
+      payload = {
+        'challenges': {
+          'correct': +user.challenges.correct + 1,
+          'attempted': +user.challenges.attempted + 1
+        },
+        'words': {
+          'correct': +user.words.correct + correct,
+          'attempted': +user.words.attempted + attempted
+        }
+        }
+      }
+
+    $.ajax({
+      url: '/api/user/' + user._id,
+      method: 'put',
+      data: payload
+    }).done(function(data) {
+      user = data;
+      console.log(data);
+      correct = 0;
+      incorrect = 0;
+      attempted = 0;
+      return message;
+    });
 }

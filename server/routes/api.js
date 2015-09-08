@@ -38,12 +38,13 @@ router.post('/test', function(req, res, next){
 
 // update user data
 router.put('/user/:id', function(req, res, next) {
+  console.log(req.body);
   var query = {'_id': req.params.id};
   var update = {
-    correctChallenges: req.body.correctChallenges,
-    attemptedChallenges: req.body.attemptedChallenges,
-    correctWords: req.body.correctWords,
-    attemptedWords: req.body.attemptedWords
+    challenges: {correct: req.body['challenges[correct]'],
+                 attempted: req.body['challenges[attempted]']},
+    words: {correct: req.body['words[correct]'],
+            attempted: req.body['words[attempted]']}
   };
   var options = {new: true};
 
