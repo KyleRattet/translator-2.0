@@ -3,10 +3,8 @@ var Schema = mongoose.Schema;
 
 var User = new Schema({
   name : String,
-  correctChallenges: Number,
-  attemptedChallenges: Number,
-  correctWords: Number,
-  attemptedWords: Number,
+  challenges: {correct: Number, attempted: Number},
+  words: {correct: Number, attempted: Number}
 });
 
 mongoose.model('users', User);

@@ -22,23 +22,25 @@ router.get('/progress', function(req, res) {
   res.render('progress', {username: "George"});
 });
 
-router.post('/users/login', function(req, res, next){
-  var query = {'name': req.params.userName};
+router.get('/users/login/:name', function(req, res, next){
+  console.log(req.params);
+  var query = {'name': req.params.name};
   User.findOne(query, function(err, User){
-    console.log(User);
     res.send(User);
   });
 });
 
 router.post('/users/new', function (req, res, next){
-  new User({
-    name: req.body.name,
-    correctChallenges: req.body.correctChallenges,
-    attemptedChallenges: req.body.correctChallenges,
-    correctWords: req.body.correctWords,
-    attemptedWords: req.body.attemptedWords,
+  console.log(req.body);
+  var newUser = new User({
+    name: req.body.userName,
+    challenges: {correct: 0, attempted: 0},
+    words: {correct: 0, attempted: 0}
   });
-  res.send(User);
+  newUser.save(function(err) {
+    console.log('New user saved to db.');
+  })
+  res.send(newUser);
 });
 
 module.exports = router;
