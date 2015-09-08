@@ -6,19 +6,25 @@ function displayCumulativeBar(user, ctx, set) {
   // set is the data to be used
   //        valid values for set are "challenges" and "words"
 
-  var dataset;
-  if (set === "challenges")
+  var dataset, dataLabels, graphLabel;
+  if (set === "challenges") {
     dataset = user.challenges;
-  else if (set === "words")
+    dataLabels = ["Passed", "Failed", "Attempted"];
+    graphLabel = "Challenges";
+  }
+  else if (set === "words") {
     dataset = user.words;
+    dataLabels = ["Correct", "Incorrect", "Attempted"];
+    graphLabel = "Words";
+  }
 
   var incorrect = dataset.attempted - dataset.correct;
 
   var data = {
-    labels: ["Correct", "Incorrect", "Attempted"],
+    labels: dataLabels,
     datasets: [
         {
-            label: "Challenges",
+            label: graphLabel,
             fillColor: "rgba(50,178,93,0.5)",
             strokeColor: "rgba(50,178,93,0.8)",
             highlightFill: "rgba(50,178,93,0.75)",
@@ -30,7 +36,7 @@ function displayCumulativeBar(user, ctx, set) {
 
   // generate chart and set it to responsive
   var chart = new Chart(ctx).Bar(data);
-  chart.options.maintainAspectRatio = false;
+  chart.options.responsive = true;
 
   // set colors for Incorrect and Attempted bars
   // Incorrect
@@ -54,10 +60,18 @@ function displayCumulativePie(user, ctx, set, which) {
   //        valid values are: "pie" and "doughnut"
 
   var dataset;
-  if (set === "challenges")
+  var sectors = [];
+  var chart;
+
+  // set tooltip labels based on dataset being rendered
+  if (set === "challenges") {
     dataset = user.challenges;
-  else if (set === "words")
+    sectors = ["Passed", "Failed"];
+  }
+  else if (set === "words") {
     dataset = user.words;
+    sectors = ["Correct", "Incorrect"];
+  }
 
   var incorrect = dataset.attempted - dataset.correct;
   var data = [
@@ -65,17 +79,22 @@ function displayCumulativePie(user, ctx, set, which) {
       value: dataset.correct,
       color: "rgba(50,178,93,0.5)",
       highlight: "rgba(50,178,93,0.75)",
-      label: "Correct"
+      label: sectors[0]
     },
     {
       value: dataset.attempted - dataset.correct,
       color: "rgba(178,39,35,0.5)",
       highlight: "rgba(178,39,35,0.75)",
-      label: "Incorrect"
+      label: sectors[1]
     }
   ];
 
   if (which === "doughnut")
-    return new Chart(ctx).Doughnut(data);
-  return new Chart(ctx).Pie(data);
+    chart = new Chart(ctx).Doughnut(data);
+  else
+    chart = new Chart(ctx).Pie(data);
+
+  chart.options.responsive = true;
+  chart.update();
+  return chart;
 }
