@@ -149,6 +149,7 @@ $('#submitAnswer').on('click', function  () {
         user = data;
       });
     }
+    $("#prog-user").html($userName);
   });
 
 
