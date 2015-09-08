@@ -1,32 +1,6 @@
-// test User
+// progress display utility funcs
 
-var george = new User("George");
-george.challenges = {correct: 6, attempted: 16};
-george.words = {correct: 20, attempted: 70};
-
-$(document).on("ready", function() {
-  var barChallCtx = $('#challenges').get(0).getContext('2d');
-  var barWordsCtx = $('#words').get(0).getContext('2d');
-  var pieChallCtx = $('#challenges-pie').get(0).getContext('2d');
-  var doughWordsCtx = $('#words-dough').get(0).getContext('2d');
-
-
-  george.displayCumulativeBar(barChallCtx, 'challenges');
-  george.displayCumulativeBar(barWordsCtx, 'words');
-  george.displayCumulativePie(pieChallCtx, 'challenges', 'pie');
-  george.displayCumulativePie(doughWordsCtx, 'words', 'doughnut');
-
-});
-
-
-// proto for a User obj
-function User(name) {
-  this.username = name;
-  this.challenges = {correct: 0, attempted: 0};
-  this.words = {correct: 0, attempted: 0};
-}
-
-User.prototype.displayCumulativeBar = function(ctx, set) {
+function displayCumulativeBar(user, ctx, set) {
   // display bar graph for cumulative progress
   // ctx = context for the canvas to draw the chart to
   // set is the data to be used
@@ -34,9 +8,9 @@ User.prototype.displayCumulativeBar = function(ctx, set) {
 
   var dataset;
   if (set === "challenges")
-    dataset = this.challenges;
+    dataset = user.challenges;
   else if (set === "words")
-    dataset = this.words;
+    dataset = user.words;
 
   var incorrect = dataset.attempted - dataset.correct;
 
@@ -73,16 +47,17 @@ User.prototype.displayCumulativeBar = function(ctx, set) {
   chart.update();
 
   return chart;
-};
+}
 
-User.prototype.displayCumulativePie = function (ctx, set, which) {
+function displayCumulativePie(user, ctx, set, which) {
   // which = whether to display as a filled in pie chart or a doughnut
   //        valid values are: "pie" and "doughnut"
+
   var dataset;
   if (set === "challenges")
-    dataset = this.challenges;
+    dataset = user.challenges;
   else if (set === "words")
-    dataset = this.words;
+    dataset = user.words;
 
   var incorrect = dataset.attempted - dataset.correct;
   var data = [
@@ -103,4 +78,4 @@ User.prototype.displayCumulativePie = function (ctx, set, which) {
   if (which === "doughnut")
     return new Chart(ctx).Doughnut(data);
   return new Chart(ctx).Pie(data);
-};
+}
