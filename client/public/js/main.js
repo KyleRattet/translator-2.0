@@ -31,7 +31,7 @@ $(document).on('ready', function() {
     };
 
     $.ajax({
-      url: "/",
+      url: "/api/translate",
       method: "post",
       data: payload
     }).done(function(data){
@@ -55,7 +55,7 @@ $(document).on('ready', function() {
       to: $languageto
     };
     $.ajax({
-      url: '/test',
+      url: '/api/test',
       method: 'post',
       data: payload
     }).done(function(data){
@@ -93,7 +93,7 @@ $('#submitAnswer').on('click', function  () {
       };
 
    $.ajax({
-      url: "/",
+      url: "/api/translate",
       method: "post",
       data: payload
     }).done(function(data){
