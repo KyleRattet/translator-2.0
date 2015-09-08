@@ -10,6 +10,7 @@ var randomWord = require('random-word');
 var mongoose = require('mongoose');
 var User = mongoose.model('users');
 
+// translate a string
 router.post('/translate', function(req, res, next) {
   console.log(req.body);
   bt.translate(req.body.text, languages[req.body.from], languages[req.body.to], function(err, translated){
@@ -21,6 +22,7 @@ router.post('/translate', function(req, res, next) {
   });
 });
 
+// generate and send back random words for test
 router.post('/test', function(req, res, next){
   var wordArray = getWord();
   var translatedArray = [];
@@ -32,6 +34,25 @@ router.post('/test', function(req, res, next){
       }
     });
   }
+});
+
+// update user data
+router.put('/user/:id', function(req, res, next) {
+  var query = {'_id': req.params.id};
+  var update = {
+    correctChallenges: req.body.correctChallenges,
+    attemptedChallenges: req.body.attemptedChallenges,
+    correctWords: req.body.correctWords,
+    attemptedWords: req.body.attemptedWords
+  };
+  var options = {new: true};
+
+  User.findOneAndUpdate(query, update, options, function(err, user) {
+    res.json({
+      message: "User data updated.",
+      user: user
+    });
+  });
 });
 
 // helpers

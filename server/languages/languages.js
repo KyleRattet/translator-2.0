@@ -12,6 +12,7 @@ var languages = {
   'English': 'en',
   'Estonian': 'et',
   'Finnish': 'fi',
+  'French': 'fr',
   'German': 'de',
   'Greek': 'el',
   'Haitin Creaole': 'ht',
