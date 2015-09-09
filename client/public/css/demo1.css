@@ -1,0 +1,15 @@
+.jumbotron {
+  padding: 10px;
+}
+
+#accordion {
+  visibility: hidden;
+  -moz-animation-duration: 2s;
+  -moz-animation-delay: 0.5s;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-delay: 0.5s;
+}
+
+#quizword, #quizresponse {
+  height: 40px;
+}

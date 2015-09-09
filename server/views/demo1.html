@@ -1,5 +1,9 @@
 {% extends 'layout.html' %}
 
+{% block css %}
+<link rel="stylesheet" href="/css/demo1.css" charset="utf-8">
+{% endblock %}
+
 {% block title %}{% endblock %}
 
 
@@ -8,25 +12,189 @@
   <div class="container">
 
     <div class="row">
-      <div class="jumbotron text-center">
-        <h1>Node Translator</h1>
-        <p>Wow! Check out this super awesome and impossibly difficult translator quiz!</p>
+      <div class="col-xs-10 col-xs-offset-1">
+        <div class="jumbotron text-center">
+          <h1>Node Translator</h1>
+          <p>Wow! Check out this super awesome and impossibly difficult translator quiz!</p>
 
-        <form id="login-form">
-          <div class="form-group">
-            <div class="input-group">
-              <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-              <input type="text" class="form-control" placeholder="Username">
-              <span class="input-group-addon">
-                New User? <input type="checkbox">
-              </span>
+          <form id="login-form">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                <input id="userName" type="text" class="form-control" placeholder="Username" required>
+                <span class="input-group-addon">
+                  New User? <input type="checkbox">
+                </span>
+              </div>
             </div>
-          </div>
-          <button type="submit" class="btn btn-primary">Sign In</button>
-        </form>
+            <button type="submit" class="btn btn-primary">Sign In</button>
+          </form>
 
+        </div>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-xs-10 col-xs-offset-1">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-practice">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-practice" aria-expanded="true" aria-controls="collapse-practice">
+                  Practice
+                </a>
+              </h4>
+            </div>
+            <div id="collapse-practice" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-practice">
+
+              <div class="panel-body">
+                <form id="practice">
+                  <div class="form-group">
+                    <label for="languagefrom">Language Translating From</label>
+                    <select class="form-control" name="from" id="languagefrom">
+
+                    {% for key,val in object %}
+                      <option>{{ key }}</option>
+                    {% endfor %}
+
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Word to Translate</label>
+                    <input type="text" name="text" class="form-control" id="wordinput" placeholder="Insert Word to Translate">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Translation</label>
+                    <input type="text" name="text" class="form-control" id="wordoutput" placeholder="Translation">
+                  </div>
+                  <div class="text-center">
+                    <button type="button" class="btn btn-primary animated rubberBand" id="translate">Translate</button>
+                  </div>
+                </form>
+              </div><!-- end panel body -->
+
+            </div>
+          </div><!-- end panel -->
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-challenge">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-challenge" aria-expanded="false" aria-controls="collapse-challenge">
+                  Challenges
+                </a>
+              </h4>
+            </div>
+            <div id="collapse-challenge" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-challenge">
+              <div class="panel-body">
+
+                <div id="pre-quiz">
+                  <div class="form-group">
+                    <label for="testlanguagefrom">Language Translating From</label>
+                    <select class="form-control" name="testfrom" id="testlanguagefrom">
+
+                      {% for key,val in object %}
+                      <option>{{ key }}</option>
+                      {% endfor %}
+
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="testlanguageto">Language Translating To</label>
+                    <select class="form-control" name="testto" id="testlanguageto">
+
+                      {% for key,val in object %}
+                      <option>{{ key }}</option>
+                      {% endfor %}
+
+                    </select>
+                  </div>
+                  <div class="text-center">
+                    <button type="button" class="btn btn-primary animated rubberBand" id="select-languages">Select Languages</button>
+                  </div>
+                  <br><br>
+                  <div class="alert alert-success" role="alert" id="success">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Languages selected successfully.
+                  </div>
+                  <div class="alert alert-danger" role="alert" id="not-selected">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    You have to select a language!
+                  </div>
+
+                  <div class="text-center">
+                    <button type="button" class="btn btn-success animated rubberBand" id="start-quiz">Start Test</button>
+                  </div>
+                </div>
+
+                <div id="quiz">
+                  <div id="quizQuestion">
+                    <h2>Quiz</h2>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Translate This Word:</label>
+                        <div class="panel panel-default">
+                          <div id="quizword" class="panel-body">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Response</label>
+                        <input type="text" name="text" class="form-control" id="quizresponse" placeholder="Insert Word to Translate">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row text-center">
+                    <button type="submit" class="btn btn-primary animated rubberBand" id="submitAnswer">Submit Answer</button>
+                  </div>
+
+                  <div class="row text-center">
+                    <div id="quizRender"></div>
+                    <div id="quizResults"></div>
+                    <div class="row text-center">
+                      <button type="button" class="btn btn-success animated rubberBand" id="new-quiz">New Test</button>
+                    </div>
+
+                  </div>
+                </div><!-- end quiz -->
+              </div><!-- close panel body -->
+           </div><!-- close collapse -->
+         </div><!-- close panel -->
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-prog">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-prog" aria-expanded="false" aria-controls="collapse-prog">
+                  Progress
+                </a>
+              </h4>
+            </div>
+            <div id="collapse-prog" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-prog">
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-xs-6 text-center">
+                    <p>Challenges</p>
+                    <canvas id="challenges"></canvas>
+                  </div>
+                  <div class="col-xs-6 text-center">
+                    <p>Words</p>
+                    <canvas id="words"></canvas>
+                  </div>
+                </div>
+              </div><!-- close panel body -->
+              <div class="panel-footer">
+                <span id="prog-user"></span>
+              </div>
+            </div><!-- close collapse -->
+          </div><!-- close panel -->
+        </div><!-- close panel-group -->
+      </div><!-- close col -->
+    </div><!-- close row -->
 
 
   </div>
