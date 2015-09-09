@@ -43,4 +43,8 @@ router.post('/users/new', function (req, res, next){
   res.send(newUser);
 });
 
+router.get('/demo1', function(req, res, next) {
+  res.render('demo1');
+});
+
 module.exports = router;
