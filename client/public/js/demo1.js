@@ -15,12 +15,6 @@ $(document).on("ready", function() {
 
   $("option:contains(English)").first().attr("selected", "selected");
 
-  // var dummy = {
-  //   name: "Ted",
-  //   challenges: {correct: 3, attempted: 7},
-  //   words: {correct: 72, attempted: 110}
-  // };
-
   $("#collapse-prog").on("shown.bs.collapse", function() {
     setTimeout(function() {
       var cntxChallenges = $("#challenges").get(0).getContext("2d");
