@@ -39,8 +39,13 @@ router.post('/users/new', function (req, res, next){
   });
   newUser.save(function(err) {
     console.log('New user saved to db.');
-  })
+  });
   res.send(newUser);
+});
+
+// route for design testing
+router.get('/demo1', function(req, res, next) {
+  res.render('demo1', {object: languages});
 });
 
 module.exports = router;

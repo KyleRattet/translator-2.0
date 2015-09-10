@@ -115,7 +115,6 @@ $('#submitAnswer').on('click', function  () {
   $('#new-quiz').on('click', function(event){
     event.preventDefault();
     $('#quizRender').html('');
-
   });
 
   function checkLanguages(){
