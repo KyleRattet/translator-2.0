@@ -62,6 +62,16 @@
                     </select>
                   </div>
                   <div class="form-group">
+                    <label for="languageto">Language Translating To</label>
+                    <select class="form-control" name="to" id="languageto">
+
+                      {% for key,val in object %}
+                      <option>{{ key }}</option>
+                      {% endfor %}
+
+                    </select>
+                  </div>
+                  <div class="form-group">
                     <label for="exampleInputEmail1">Word to Translate</label>
                     <input type="text" name="text" class="form-control" id="wordinput" placeholder="Insert Word to Translate">
                   </div>
@@ -198,6 +208,15 @@
     </div><!-- close row -->
 
 
-  </div>
+  </div><!-- close container -->
+  <footer>
+    <div class="container">
+      <div class="well">
+        <p>
+          Created by <a href="https://github.com/Bbouley">Bradley Bouley</a>, <a href="https://github.com/Mannette">Ethan Mannette</a>, <a href="https://github.com/KyleRattet">Kyle Rattet</a>, <a href="https://github.com/SuhaylTFaris">Suhayl Faris</a>, and <a href="https://github.com/benhassara">Ben Hassara</a>.
+        </p>
+      </div>
+    </div>
+  </footer>
 
 {% endblock %}
