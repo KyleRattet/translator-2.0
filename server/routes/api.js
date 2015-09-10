@@ -29,7 +29,7 @@ router.post('/test', function(req, res, next){
   for (var i = 0; i < wordArray.length; i++) {
     var word = translateWords(wordArray[i], languages[req.body.from], function(err, data){
       translatedArray.push(data);
-      if(translatedArray.length === 19){
+      if(translatedArray.length === 20){
         res.send({array: translatedArray, fromLanguage:req.body.from, toLanguage: req.body.to});
       }
     });

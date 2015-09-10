@@ -162,15 +162,24 @@ $(document).on("ready", function() {
       }).done(function(data){
         console.log('after ajax call: '+attempted);
         $('#quizresponse').val('');
-        $('#quizRender').append("<h4>" + checkAnswer(data.translated_text, $quizResponse) + "<h4>");
+        var checked = checkAnswer(data.translated_text, $quizResponse);
+        if(checked === undefined){
+          $('#quizRender').html('');
+        }
+        else {
+          $('#quizRender').append("<h4>" + checked + "<h4>");
+        }
         $('#quizResults').append("<h4>" + gradeQuiz(incorrect) + "<h4>");
         $('#quizword').html(testWords[attempted]);
+        $('#quizresponse').focus();
       });
     });
 
     $('#new-quiz').on('click', function(event){
       event.preventDefault();
       $('#quizRender').html('');
+      $("#quiz").hide();
+      $("#pre-quiz").show();
     });
 });
 
@@ -192,46 +201,74 @@ function gradeQuiz (incorrect) {
   }
 }
 
+var diffs = 0;
+
+function longerQuestion (questionArr, responseArr) {
+
+  for (var i = 0; i < questionArr.length - 1; i++) {
+    if (questionArr[i + 1] !== responseArr[i]) {
+      diffs += 1;
+    }
+  }
+}
+
+function longerResponse (questionArr, responseArr) {
+  for (var i = 0; i < responseArr.length; i++) {
+    if (questionArr[i] !== responseArr[i + 1]) {
+      diffs += 1;
+    }
+  }
+}
+
+function compare (word, response) {
+
+  var questionArray = word.split('');
+  var responseArray = response.split('');
+
+  if (questionArray.length >= responseArray.length) {
+    for (var i = 0; i < questionArray.length; i++) {
+      if (questionArray[i] !== responseArray[i]) {
+        diffs += 1;
+        var newQuestion = questionArray.splice(i, questionArray.length);
+        var newResponse = responseArray.splice(i, responseArray.length);
+        longerQuestion(newQuestion, newResponse);
+      }
+    }
+  }
+  else if (questionArray.length < responseArray.length) {
+    for (var i = 0; i < responseArray.length; i++) {
+      if (questionArray[i] !== responseArray[i]) {
+        diffs += 1;
+        console.log(diffs);
+        var newQuestion = questionArray.splice(i, questionArray.length);
+        var newResponse = responseArray.splice(i, responseArray.length);
+        longerResponse(newQuestion, newResponse);
+      }
+    }
+  }
+}
+
 //Check One Quiz Answer
 function checkAnswer (word, response) {
-
-  // if(attempted === 0){
-  //   $('#quizRender').hide();
-  // } else {
-  //   $('#quizRender').show();
-  // }
-
 
   if(attempted === 19){
     $('#submitAnswer').text('');
     $('#submitAnswer').text('Finish Quiz');
   }
 
-  if(attempted === 20 || incorrect === 5){
-    return endQuiz();
-  }
-
-  var diffs = 0;
   var message ="";
   var lengthCompare = Math.abs(word.length - response.length);
 
   if (lengthCompare <= 1) {
 
-    for (var i = 0; i < word.length; i++) {
-
-        if (word.charAt(i) !== response.charAt(i)) {
-          diffs += 1;
-        }
-        else {
-        }
-    }
+    compare(word, response);
 
     if (diffs < 1 && lengthCompare === 0) {
       correct += 1;
-      message ="That's correct!";
+      message ="100% correct!";
     } else if (diffs === 1) {
       correct += 1;
-      message="Close enough";
+      message="You're close. The exact translation is: " + word + "." ;
     } else {
       incorrect += 1;
       message= "incorrect, too many errors";
@@ -239,11 +276,17 @@ function checkAnswer (word, response) {
 
   } else {
     incorrect += 1;
-      message = "incorrect, word length is too different";
+    message = "incorrect, word length is too different";
   }
   attempted = correct + incorrect;
+
+  if(attempted === 20 || incorrect === 5){
+    return endQuiz();
+  }
+
   $('#quizQuestion').html('');
   $('#quizQuestion').append("<h2>" + "Quiz #: " + (attempted + 1)  + "<h2>");
+  diffs = 0;
   return message;
 }
 
@@ -266,6 +309,7 @@ function endQuiz () {
 
     var payload;
     if (incorrect === 5) {
+      $('#quizRender').html('');
       payload = {
         'challenges': {
           'correct': +user.challenges.correct,
