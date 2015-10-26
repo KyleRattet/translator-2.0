@@ -8,4 +8,4 @@ var User = new Schema({
 });
 
 mongoose.model('users', User);
-mongoose.connect('mongodb://localhost/translate-users');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/translate-users');
