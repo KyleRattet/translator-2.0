@@ -4,6 +4,7 @@ var toLanguage;
 var attempted;
 var user;
 
+var diffs = 0;
 var correct = 0;
 var incorrect = 0;
 var attempted = correct + incorrect;
@@ -201,7 +202,7 @@ function gradeQuiz (incorrect) {
   }
 }
 
-var diffs = 0;
+
 
 function longerQuestion (questionArr, responseArr) {
 
