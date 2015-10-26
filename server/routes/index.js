@@ -1,10 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var http = require('http');
-var keys = require('../../keys.js');
+// var keys = require('../../keys.js');
+// var bt = require('bing-translate').init({
+//     client_id: keys.id,
+//     client_secret: keys.secret
+//   });
 var bt = require('bing-translate').init({
-    client_id: keys.id,
-    client_secret: keys.secret
+    client_id: process.env.ID,
+    client_secret: process.env.SECRET
   });
 var languages = require('../languages/languages.js');
 var randomWord = require('random-word');
