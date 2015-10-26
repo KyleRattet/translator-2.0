@@ -16,7 +16,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('users');
 
 router.get('/', function(req, res, next) {
-  res.render('index', {
+  res.render('demo1', {
     object: languages
     });
 });
