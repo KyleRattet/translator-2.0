@@ -19,7 +19,7 @@
         <div class="jumbotron text-center">
           <h1>The Translatonator</h1>
           <p>Sign In to instantly translate to and from over 40 languages! Brush up on your foreign language skills with a 20 question interactive quiz featuring any languages you choose, and keep tabs on your quiz performance through the built-in progress tracker!</p>
-
+<!--
           <form id="login-form">
             <div class="form-group">
               <div class="input-group">
@@ -32,6 +32,19 @@
             </div>
             <button type="submit" class="btn btn-primary">Sign In</button>
           </form>
+ -->
+            <form id="login-form">
+              <div class="form-group">
+                <label for="User">User Name: </label>
+                <input type="text" class="form-control" id="userName" name="userName" placeholder="User">
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id = 'newUser'>New User?
+                </label>
+              </div>
+              <button type="submit" class="btn btn-default" id = 'userSubmit'>Submit</button>
+            </form>
 
         </div>
       </div>

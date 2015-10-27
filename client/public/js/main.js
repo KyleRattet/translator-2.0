@@ -35,45 +35,98 @@ $(document).on("ready", function() {
   $('#welcome').hide();
 
   // login submission handler
-  $("#login-form").on("submit", function(event) {
-    event.preventDefault();
+  // $("#login-form").on("submit", function(event) {
+  //   event.preventDefault();
 
-    var endAnimation = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend";
+  //   var endAnimation = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend";
+  //   var bounceOut = "animated bounceOutUp";
+  //   var bounceIn = "animated bounceInUp";
+
+  //   $(".jumbotron").addClass(bounceOut).one(endAnimation, function() {
+  //     $(this).css("display", "none");
+  //   });
+  //   $("#accordion").addClass(bounceIn).css("visibility", "visible");
+
+  //  if($('#newUser').is(':checked')){
+  //    $userName = $('#userName').val();
+  //    var payload = {
+  //      userName : $userName
+  //    };
+  //    $.ajax({
+  //      url: '/users/new',
+  //      method: 'post',
+  //      data: payload
+  //    }).done(function(data){
+  //      user = data;
+  //      console.log("new user: ", user);
+  //    });
+  //  } else {
+  //    $userName = $('#userName').val();
+  //    var payload2 = {
+  //      name: $userName
+  //    };
+  //    $.get('/users/login/' + $userName, function(data) {
+  //      user = data;
+  //      console.log("user login: ", user);
+  //    });
+  //  }
+  //  $("#prog-user").html($userName);
+  //  $('#welcome').show();
+  // });
+    $('#login-form').on('submit', function(e){
+    e.preventDefault();
+
+      var endAnimation = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend";
     var bounceOut = "animated bounceOutUp";
     var bounceIn = "animated bounceInUp";
+
 
     $(".jumbotron").addClass(bounceOut).one(endAnimation, function() {
       $(this).css("display", "none");
     });
     $("#accordion").addClass(bounceIn).css("visibility", "visible");
+    var $form = $(this).parent();
+    if($('#newUser').is(':checked')){
+    $userName = $('#userName').val();
+      var payload = {
+      userName : $userName
+      };
+      $.ajax({
+        url: '/users/new',
+        method: 'post',
+        data: payload
+      }).done(function(data){
+        user = data;
+        console.log("new user: ", user);
+      });
+    } else {
+      $userName = $('#userName').val();
+      var payload2 = {
+        name: $userName
+      };
+      $.get('/users/login/' + $userName, function(data) {
+        user = data;
+        console.log("user login: ", user);
+      });
 
-   if($('#newUser').is(':checked')){
-     $userName = $('#userName').val();
-     var payload = {
-       userName : $userName
-     };
-     $.ajax({
-       url: '/users/new',
-       method: 'post',
-       data: payload
-     }).done(function(data){
-       user = data;
-       console.log("new user: ", user);
-     });
-   } else {
-     $userName = $('#userName').val();
-     var payload2 = {
-       name: $userName
-     };
-     $.get('/users/login/' + $userName, function(data) {
-       user = data;
-       console.log("user login: ", user);
-     });
-   }
-   $("#prog-user").html($userName);
-   $('#welcome').show();
+    //     $.ajax({
+    //   url: '/api/user/' + user._id,
+    //   method: 'put',
+    //   data: payload
+    // }).done(function(data) {
+    //   user = data.user;
+    //   console.log(data);
+    //   correct = 0;
+    //   incorrect = 0;
+    //   attempted = 0;
+    //   challengeChart.update();
+    //   wordsChart.update();
+    //   return message;
+    // });
+    }
+    $("#prog-user").html($userName);
+    $('#welcome').show();
   });
-
   // practice translate handler
   $("#translate").on("click", function(e) {
     e.preventDefault();
