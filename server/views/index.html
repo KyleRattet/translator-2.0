@@ -33,7 +33,7 @@
             <button type="submit" class="btn btn-primary">Sign In</button>
           </form>
  -->
-            <form id="login-form">
+       <!--      <form id="login-form">
               <div class="form-group">
                 <label for="User">User Name: </label>
                 <input type="text" class="form-control" id="userName" name="userName" placeholder="User">
@@ -43,6 +43,25 @@
                   <input type="checkbox" id = 'newUser'>New User?
                 </label>
               </div>
+              <button type="submit" class="btn btn-default" id = 'userSubmit'>Submit</button>
+            </form> -->
+
+             <form class="form-inline" id="login-form">
+              <div class="form-group">
+                 <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                    <input type="text" class="form-control" id="userName" name="userName" placeholder="User">
+                    <div class="input-group-addon">
+                  New User? <input type="checkbox" id = 'newUser'>
+                  </div>
+                  </div>
+
+              </div>
+            <!--   <div class="checkbox">
+                <label>
+                  <input type="checkbox" id = 'newUser'>New User?
+                </label>
+              </div> -->
               <button type="submit" class="btn btn-default" id = 'userSubmit'>Submit</button>
             </form>
 

@@ -203,7 +203,7 @@ $(document).on("ready", function() {
   $('#submitAnswer').on('click', function  () {
     $('#quizRender').html('');
     $('#quizResults').html('');
-
+    $('#quizResults').show();
     var $quizWord = $('#quizword').html();
     var $quizResponse = $('#quizresponse').val();
     var payload = {
@@ -237,6 +237,9 @@ $(document).on("ready", function() {
       $('#quizRender').html('');
       $("#quiz").hide();
       $("#pre-quiz").show();
+      $("#game-over").hide();
+      $("#new-quiz").hide();
+      $('#quizResults').hide();
     });
 });
 
