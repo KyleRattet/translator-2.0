@@ -13,3 +13,12 @@
 #quizword, #quizresponse {
   height: 40px;
 }
+
+.panel-title>a, .panel-title>small, .panel-title>.small, .panel-title>small>a, .panel-title>.small>a {
+
+    font-size: large !important;
+  }
+
+#welcome {
+  color:#F8F5F0;
+}

@@ -16,7 +16,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('users');
 
 router.get('/', function(req, res, next) {
-  res.render('demo1', {
+  res.render('index', {
     object: languages
     });
 });
@@ -49,7 +49,7 @@ router.post('/users/new', function (req, res, next){
 
 // route for design testing
 router.get('/demo1', function(req, res, next) {
-  res.render('demo1', {object: languages});
+  res.render('mvp', {object: languages});
 });
 
 module.exports = router;
