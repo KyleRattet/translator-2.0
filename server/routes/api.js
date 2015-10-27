@@ -1,10 +1,5 @@
 var express = require('express');
 var router = express.Router();
-// var keys = require('../../keys.js');
-// var bt = require('bing-translate').init({
-//     client_id: keys.id,
-//     client_secret: keys.secret
-//   });
 var bt = require('bing-translate').init({
     client_id: process.env.ID,
     client_secret: process.env.SECRET
@@ -16,7 +11,6 @@ var User = mongoose.model('users');
 
 // translate a string
 router.post('/translate', function(req, res, next) {
-  console.log(req.body);
   bt.translate(req.body.text, languages[req.body.from], languages[req.body.to], function(err, translated){
     if (err) {
       res.json(err);
@@ -42,7 +36,6 @@ router.post('/test', function(req, res, next){
 
 // update user data
 router.put('/user/:id', function(req, res, next) {
-  console.log(req.body);
   var query = {'_id': req.params.id};
   var update = {
     challenges: {

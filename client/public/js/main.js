@@ -34,45 +34,6 @@ $(document).on("ready", function() {
   $("#quiz").hide();
   $('#welcome').hide();
 
-  // login submission handler
-  // $("#login-form").on("submit", function(event) {
-  //   event.preventDefault();
-
-  //   var endAnimation = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend";
-  //   var bounceOut = "animated bounceOutUp";
-  //   var bounceIn = "animated bounceInUp";
-
-  //   $(".jumbotron").addClass(bounceOut).one(endAnimation, function() {
-  //     $(this).css("display", "none");
-  //   });
-  //   $("#accordion").addClass(bounceIn).css("visibility", "visible");
-
-  //  if($('#newUser').is(':checked')){
-  //    $userName = $('#userName').val();
-  //    var payload = {
-  //      userName : $userName
-  //    };
-  //    $.ajax({
-  //      url: '/users/new',
-  //      method: 'post',
-  //      data: payload
-  //    }).done(function(data){
-  //      user = data;
-  //      console.log("new user: ", user);
-  //    });
-  //  } else {
-  //    $userName = $('#userName').val();
-  //    var payload2 = {
-  //      name: $userName
-  //    };
-  //    $.get('/users/login/' + $userName, function(data) {
-  //      user = data;
-  //      console.log("user login: ", user);
-  //    });
-  //  }
-  //  $("#prog-user").html($userName);
-  //  $('#welcome').show();
-  // });
     $('#login-form').on('submit', function(e){
     e.preventDefault();
 
@@ -97,7 +58,6 @@ $(document).on("ready", function() {
         data: payload
       }).done(function(data){
         user = data;
-        console.log("new user: ", user);
       });
     } else {
       $userName = $('#userName').val();
@@ -106,23 +66,8 @@ $(document).on("ready", function() {
       };
       $.get('/users/login/' + $userName, function(data) {
         user = data;
-        console.log("user login: ", user);
       });
 
-    //     $.ajax({
-    //   url: '/api/user/' + user._id,
-    //   method: 'put',
-    //   data: payload
-    // }).done(function(data) {
-    //   user = data.user;
-    //   console.log(data);
-    //   correct = 0;
-    //   incorrect = 0;
-    //   attempted = 0;
-    //   challengeChart.update();
-    //   wordsChart.update();
-    //   return message;
-    // });
     }
     $("#prog-user").html($userName);
     $('#welcome').show();
@@ -217,7 +162,6 @@ $(document).on("ready", function() {
         method: "post",
         data: payload
       }).done(function(data){
-        console.log('after ajax call: '+attempted);
         $('#quizresponse').val('');
         var checked = checkAnswer(data.translated_text, $quizResponse);
         if(checked === undefined){
@@ -401,7 +345,6 @@ function endQuiz () {
       data: payload
     }).done(function(data) {
       user = data.user;
-      console.log(data);
       correct = 0;
       incorrect = 0;
       attempted = 0;
